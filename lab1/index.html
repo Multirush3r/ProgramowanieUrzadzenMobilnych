@@ -2,8 +2,16 @@
 <html>
 <body>
 
-<canvas id="myCanvas" width="800" height="600" style="border:1px solid #d3d3d3;">
+<canvas id="canv" width="800" height="600" style="border:1px solid #d3d3d3;">
 </canvas>
+
+<script>
+    var c = document.getElementById("canv");
+    var ctx = c.getContext("2d");
+    ctx.beginPath();
+    ctx.arc(800/2,600/2,250,0,2*Math.PI);
+    ctx.stroke();
+</script> 
 
 </body>
 </html>
