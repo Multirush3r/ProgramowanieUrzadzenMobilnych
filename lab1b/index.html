@@ -31,20 +31,24 @@
         c.stroke();
       }
 
+      var j = 0;
       function draw_circle2() {
+        requestAnimationFrame(draw_circle2);
         c.clearRect(200, 0, 200, 200);
         c.beginPath();
         c.rect(200, 0, 200, 200);
         c.stroke();
 
+        if (j == 256) j = 0;
         c.beginPath();
-        for (var green = 0; green < 255; green++) {
-          c.clearRect(200, 0, 200, 200);
-          c.arc(300, 100, 50, 0, Math.PI * 2, false);
-          c.fillStyle = `rgba(0, ${green}, ${255 - green})`;
-          c.fill();
-          c.stroke();
-        }
+
+        c.clearRect(200, 0, 200, 200);
+        c.arc(300, 100, 50, 0, Math.PI * 2, false);
+        c.fillStyle = `rgba(0, ${255 - j}, 0)`;
+        c.fill();
+        c.stroke();
+
+        j++;
       }
 
       draw_circle1();
