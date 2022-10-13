@@ -17,7 +17,7 @@
       function draw_circle1() {
         c.clearRect(0, 0, 200, 200);
         c.beginPath();
-        c.rect(0, 0, 200, 200);
+        // c.rect(0, 0, 200, 200);
         c.stroke();
         c.beginPath();
         c.arc(100, 100, 50, 0, Math.PI * 2, false);
@@ -36,7 +36,7 @@
         requestAnimationFrame(draw_circle2);
         c.clearRect(200, 0, 200, 200);
         c.beginPath();
-        c.rect(200, 0, 200, 200);
+        // c.rect(200, 0, 200, 200);
         c.stroke();
 
         if (j == 256) j = 0;
@@ -53,26 +53,23 @@
 
       var x = 500;
       var y = 100;
-      var dx = 5;
       var dy = 5;
       var radius = 50;
       var k = 0;
       function draw_circle3() {
         requestAnimationFrame(draw_circle3);
-        c.clearRect(400, 0, 200, 600);
+        c.clearRect(400, 0, 201, 600);
         c.beginPath();
         c.stroke();
 
         if (k == 256) k = 0;
-        c.beginPath();
-
         if (y + radius > canvas.height || y - radius < 0) {
           dy = -dy;
         }
-
         y += dy;
 
-        c.arc(x + radius, y + radius, radius, 0, Math.PI * 2, false);
+        c.beginPath();
+        c.arc(x, y, radius, 0, Math.PI * 2, false);
         c.fillStyle = `rgba(0, ${255 - k}, ${k}, 1)`;
         c.fill();
         c.stroke();
