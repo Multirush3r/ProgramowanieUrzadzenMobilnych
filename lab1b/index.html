@@ -4,7 +4,7 @@
   <body>
     <canvas></canvas>
     <script>
-      // 0 green 250-green
+      // 0 green 255-green
       var canvas = document.querySelector("canvas");
       canvas.width = 800;
       canvas.height = 600;
@@ -36,6 +36,11 @@
         c.beginPath();
         c.rect(200, 0, 200, 200);
         c.stroke();
+
+        c.beginPath();
+        for (var j = 0; j < 255; j++) {
+          c.clearRect(0, 0, 200, 200);
+        }
       }
 
       draw_circle1();
