@@ -32,14 +32,18 @@
       }
 
       function draw_circle2() {
-        c.clearRect(0, 0, 200, 200);
+        c.clearRect(200, 0, 200, 200);
         c.beginPath();
         c.rect(200, 0, 200, 200);
         c.stroke();
 
         c.beginPath();
         for (var j = 0; j < 255; j++) {
-          c.clearRect(0, 0, 200, 200);
+          c.clearRect(200, 0, 200, 200);
+          c.arc(300, 100, 50, 0, Math.PI * 2, false);
+          c.fillStyle = "rgba(0, " + j + ", 255 - " + j;
+          c.fill();
+          c.stroke();
         }
       }
 
