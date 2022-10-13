@@ -5,7 +5,18 @@
     <canvas></canvas>
     <script>
       var canvas = document.querySelector("canvas");
+      canvas.width = 800;
+      canvas.height = 600;
       var c = canvas.getContext("2d");
+
+      function draw_circle() {
+        c.beginPath();
+        c.arc(100, 100, 50, 0, Math.PI * 2, false);
+        c.stroke();
+      }
+
+      draw_circle();
+      setInterval(draw_circle, 1000);
     </script>
   </body>
 </html>
