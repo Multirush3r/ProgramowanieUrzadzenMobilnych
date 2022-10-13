@@ -17,11 +17,12 @@
         c.clearRect(0, 0, 800, 600);
         c.beginPath();
         c.arc(100, 100, 50, 0, Math.PI * 2, false);
-        if (i > 0) {
+        c.fillStyle = colors[i];
+        if (i == 0) {
+          i = 1;
+        } else {
           i = 0;
         }
-        c.fillStyle = colors[i];
-        i++;
         c.fill();
         c.stroke();
       }
