@@ -4,6 +4,7 @@
   <body>
     <canvas></canvas>
     <script>
+      // 0 green 250-green
       var canvas = document.querySelector("canvas");
       canvas.width = 800;
       canvas.height = 600;
@@ -13,8 +14,11 @@
       var colors = ["green", "blue"];
       var i = 0;
 
-      function draw_circle() {
-        c.clearRect(0, 0, 800, 600);
+      function draw_circle1() {
+        c.clearRect(0, 0, 200, 200);
+        c.beginPath();
+        c.rect(0, 0, 200, 200);
+        c.stroke();
         c.beginPath();
         c.arc(100, 100, 50, 0, Math.PI * 2, false);
         c.fillStyle = colors[i];
@@ -27,8 +31,16 @@
         c.stroke();
       }
 
-      draw_circle();
-      setInterval(draw_circle, 1000);
+      function draw_circle2() {
+        c.clearRect(0, 0, 200, 200);
+        c.beginPath();
+        c.rect(200, 0, 200, 200);
+        c.stroke();
+      }
+
+      draw_circle1();
+      draw_circle2();
+      setInterval(draw_circle1, 1000);
     </script>
   </body>
 </html>
