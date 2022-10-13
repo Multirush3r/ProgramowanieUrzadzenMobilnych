@@ -7,11 +7,22 @@
       var canvas = document.querySelector("canvas");
       canvas.width = 800;
       canvas.height = 600;
+      canvas.style.border = "1px solid black";
       var c = canvas.getContext("2d");
 
+      var colors = ["green", "blue"];
+      var i = 0;
+
       function draw_circle() {
+        c.clearRect(0, 0, 800, 600);
         c.beginPath();
         c.arc(100, 100, 50, 0, Math.PI * 2, false);
+        if (i > 0) {
+          i = 0;
+        }
+        c.fillStyle = colors[i];
+        i++;
+        c.fill();
         c.stroke();
       }
 
