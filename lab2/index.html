@@ -52,25 +52,22 @@
 
         this.update = function () {
           stairsArray.forEach((element) => {
-            console.log(
-              getDistance(
-                element.x,
-                element.y,
-                this.x + this.radius,
-                this.y + this.radius
-              )
-            );
             if (
-              this.y + this.radius >
-              getDistance(element.x, element.y, this.x, this.y) + 1
+              this.x + this.radius > element.x &&
+              this.x - this.radius < element.x + element.width &&
+              this.y - this.radius < element.y + element.height &&
+              this.y + this.radius > element.y
             ) {
-              this.dy = -this.dy;
-            } else {
-              this.dy += 0.5;
+              if (this.y > element.y && this.y < element.y + element.width) {
+                this.dy *= -1;
+              }
             }
 
             if (this.x + this.radius > 800 || this.x - this.radius < 0) {
               this.dx = -this.dx;
+            }
+            if (this.y + this.radius > 600 || this.y - this.radius < 0) {
+              this.dy = -this.dy;
             }
           });
 
@@ -86,7 +83,7 @@
         stairsArray.push(new Stair(i * 100, 100 + i * 100, 100, 500 - i * 100));
       }
 
-      let ball = new Ball(50, 50, 0.2, 0.2, 25, stairsArray);
+      let ball = new Ball(50, 50, 5, 5, 25, stairsArray);
 
       function animation() {
         requestAnimationFrame(animation);
