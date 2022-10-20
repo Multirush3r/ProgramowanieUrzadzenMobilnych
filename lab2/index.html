@@ -62,15 +62,14 @@
                 this.dy *= -1;
               }
             }
-
-            if (this.x + this.radius > 800 || this.x - this.radius < 0) {
-              this.dx = -this.dx;
-            }
-            if (this.y + this.radius > 600 || this.y - this.radius < 0) {
-              this.dy = -this.dy;
-            }
           });
 
+          if (this.x + this.radius > 800 || this.x - this.radius < 0) {
+            this.dx = -this.dx;
+          }
+          if (this.y + this.radius > 600 || this.y - this.radius < 0) {
+            this.dy = -this.dy;
+          }
           this.x += this.dx;
           this.y += this.dy;
 
@@ -83,8 +82,6 @@
         stairsArray.push(new Stair(i * 100, 100 + i * 100, 100, 500 - i * 100));
       }
 
-      let ball = new Ball(50, 50, 5, 5, 25, stairsArray);
-
       function animation() {
         requestAnimationFrame(animation);
         c.clearRect(0, 0, 800, 600);
@@ -94,7 +91,21 @@
         ball.update();
       }
 
-      animation();
+      let ball = new Ball(50, 50, 5, 5, 25, stairsArray);
+
+      let global_var = 0;
+      setInterval(drawRect, 1000);
+      function drawRect() {
+        if (global_var < 5) {
+          stairsArray[global_var].draw();
+        }
+        if (global_var == 5) {
+          console.log("aaaa");
+          animation();
+        }
+        global_var++;
+      }
+      drawRect();
     </script>
   </body>
 </html>
