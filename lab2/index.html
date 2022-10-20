@@ -62,7 +62,7 @@
             );
             if (
               this.y + this.radius >
-              getDistance(element.x, element.y, this.x, this.y)
+              getDistance(element.x, element.y, this.x, this.y) + 1
             ) {
               this.dy = -this.dy;
             } else {
