@@ -48,8 +48,22 @@
             this.dx = -this.dx;
           }
 
+          stairsArray.forEach((element) => {
+            console.log(element.height);
+            if (
+              this.y + this.radius > element.height ||
+              this.y - this.radius < 0
+            ) {
+              this.dy = -this.dy;
+            } else {
+              this.dy += 0.5;
+            }
+          });
+
           if (this.y + this.radius > 600 || this.y - this.radius < 0) {
             this.dy = -this.dy;
+          } else {
+            this.dy += 0.5;
           }
 
           this.x += this.dx;
