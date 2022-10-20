@@ -51,27 +51,46 @@
         };
 
         this.update = function () {
-          stairsArray.forEach((element) => {
-            if (
-              this.x + this.radius > element.x &&
-              this.x - this.radius < element.x + element.width &&
-              this.y - this.radius < element.y + element.height &&
-              this.y + this.radius > element.y
-            ) {
-              if (this.y > element.y && this.y < element.y + element.width) {
-                this.dy *= -1;
-              }
-            }
-          });
+          //   stairsArray.forEach((element) => {
+          //     if (
+          //       this.x + this.radius > element.x &&
+          //       this.x - this.radius < element.x + element.width &&
+          //       this.y - this.radius < element.y + element.height &&
+          //       this.y + this.radius > element.y
+          //     ) {
+          //       if (this.y > element.y && this.y < element.y + element.width) {
+          //         this.dy *= -1;
+          //       }
+          //     }
+          //   });
+
+          if (this.x > 0 && this.x < 100) {
+            this.y = 100 - this.radius;
+          }
+          if (this.x > 100 && this.x < 200) {
+            this.y = 200 - this.radius;
+          }
+          if (this.x > 200 && this.x < 300) {
+            this.y = 300 - this.radius;
+          }
+          if (this.x > 300 && this.x < 400) {
+            this.y = 400 - this.radius;
+          }
+          if (this.x > 400 && this.x < 500) {
+            this.y = 500 - this.radius;
+          }
+          if (this.x > 500) {
+            this.y = 600 - this.radius;
+          }
 
           if (this.x + this.radius > 800 || this.x - this.radius < 0) {
             this.dx = -this.dx;
           }
-          if (this.y + this.radius > 600 || this.y - this.radius < 0) {
-            this.dy = -this.dy;
-          }
+          //   if (this.y + this.radius > 600 || this.y - this.radius < 0) {
+          //     this.dy = -this.dy;
+          //   }
           this.x += this.dx;
-          this.y += this.dy;
+          //   this.y += this.dy;
 
           this.draw();
         };
@@ -91,7 +110,7 @@
         ball.update();
       }
 
-      let ball = new Ball(50, 50, 5, 5, 25, stairsArray);
+      let ball = new Ball(50, 50, 1, 1, 25, stairsArray);
 
       let global_var = 0;
       setInterval(drawRect, 1000);
