@@ -56,6 +56,14 @@
           }
 
           stairsArray.forEach((element) => {
+            console.log(
+              getDistance(
+                element.x,
+                element.y,
+                this.x + this.radius,
+                this.y + this.radius
+              )
+            );
             if (
               this.y + this.radius >
                 getDistance(element.x, element.y, this.x, this.y) ||
@@ -67,7 +75,7 @@
             }
           });
 
-          if (this.y + this.radius > 600 || this.y - this.radius < 0) {
+          if (this.y - this.radius < 0) {
             this.dy = -this.dy;
           } else {
             this.dy += 0.5;
@@ -85,7 +93,7 @@
         stairsArray.push(new Stair(i * 100, 100 + i * 100, 100, 500 - i * 100));
       }
 
-      let ball = new Ball(100, 100, 5, 5, 25, stairsArray);
+      let ball = new Ball(100, 100, 1, 1, 25, stairsArray);
 
       function animation() {
         requestAnimationFrame(animation);
