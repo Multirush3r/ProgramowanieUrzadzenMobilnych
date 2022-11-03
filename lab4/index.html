@@ -56,6 +56,12 @@
         for (let i = 0; i < redLanes.length; i++) {
           redLanes[i].update();
         }
+
+        redLanes = redLanes.filter((object) => object.y < 600);
+        if (redLanes < 6) {
+          redLanes.push(new Rect(200, 0, 50, 50, "red", 5));
+          redLanes.push(new Rect(550, 0, 50, 50, "red", 5));
+        }
       }
 
       setInterval(draw, 10);
