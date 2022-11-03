@@ -31,6 +31,22 @@
         };
       }
 
+      function Car(x, y, dx, color) {
+        this.x = x;
+        this.y = y;
+        this.dx = dx;
+        this.color = color;
+
+        this.draw = function () {
+          c.beginPath();
+          c.rect(this.x, this.y, 50, 100);
+          c.fillStyle = color;
+          c.fill();
+          c.stroke();
+          c.closePath();
+        };
+      }
+
       let staticRects = [];
       let left_grass = new Rect(0, 0, 200, 600, "green", 0);
       let right_grass = new Rect(600, 0, 200, 600, "green", 0);
@@ -46,6 +62,8 @@
         whiteLines.push(new Rect(375, 0 + i * 50, 50, 50, "white", 5));
       }
 
+      let car = new Car(350, 400, 5, "red");
+
       function draw() {
         c.clearRect(0, 0, 800, 600);
 
@@ -58,6 +76,8 @@
         for (let i = 0; i < whiteLines; i++) {
           whiteLines[i].draw();
         }
+
+        car.draw();
 
         for (let i = 0; i < redLanes.length; i++) {
           redLanes[i].update();
