@@ -20,7 +20,6 @@
         this.draw = function () {
           c.beginPath();
           c.rect(this.x, this.y, this.w, this.h);
-          c.strokeStyle = color;
           c.fillStyle = color;
           c.fill();
           c.stroke();
@@ -42,11 +41,14 @@
       let redLanes = [];
       for (let i = 0; i < 12; i += 2) {
         redLanes.push(new Rect(200, 0 + i * 50, 50, 50, "red", 5));
+        redLanes.push(new Rect(550, 0 + i * 50, 50, 50, "red", 5));
       }
       function draw() {
         for (let i = 0; i < staticRects.length; i++) {
           staticRects[i].draw();
-          redLanes.draw();
+        }
+        for (let i = 0; i < redLanes.length; i++) {
+          redLanes[i].draw();
         }
       }
 
