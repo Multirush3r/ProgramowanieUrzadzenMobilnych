@@ -34,7 +34,23 @@
 
       let staticRects = [];
       let left_grass = new Rect(0, 0, 200, 600, "green", 0);
-      function draw() {}
+      let right_grass = new Rect(600, 0, 200, 600, "green", 0);
+      let lane = new Rect(250, 0, 300, 600, "black");
+      staticRects.push(left_grass, right_grass, lane);
+
+      let movingRects = [];
+      let redLanes = [];
+      for (let i = 0; i < 12; i += 2) {
+        redLanes.push(new Rect(200, 0 + i * 50, 50, 50, "red", 5));
+      }
+      function draw() {
+        for (let i = 0; i < staticRects.length; i++) {
+          staticRects[i].draw();
+          redLanes.draw();
+        }
+      }
+
+      draw();
     </script>
   </body>
 </html>
