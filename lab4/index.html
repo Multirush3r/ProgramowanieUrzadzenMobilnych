@@ -39,10 +39,13 @@
 
       let movingRects = [];
       let redLanes = [];
+      let whiteLines = [];
       for (let i = 0; i < 12; i += 2) {
         redLanes.push(new Rect(200, 0 + i * 50, 50, 50, "red", 5));
         redLanes.push(new Rect(550, 0 + i * 50, 50, 50, "red", 5));
+        whiteLines.push(new Rect(375, 0 + i * 50, 50, 50, "white", 50));
       }
+
       function draw() {
         c.clearRect(0, 0, 800, 600);
 
@@ -52,9 +55,15 @@
         for (let i = 0; i < redLanes.length; i++) {
           redLanes[i].draw();
         }
+        for (let i = 0; i < whiteLines; i++) {
+          whiteLines[i].draw();
+        }
 
         for (let i = 0; i < redLanes.length; i++) {
           redLanes[i].update();
+        }
+        for (let i = 0; i < whiteLines.length; i++) {
+          whiteLines[i].update();
         }
 
         redLanes = redLanes.filter((object) => object.y < 600);
