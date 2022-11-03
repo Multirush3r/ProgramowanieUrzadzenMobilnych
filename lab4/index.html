@@ -43,7 +43,7 @@
       for (let i = 0; i < 12; i += 2) {
         redLanes.push(new Rect(200, 0 + i * 50, 50, 50, "red", 5));
         redLanes.push(new Rect(550, 0 + i * 50, 50, 50, "red", 5));
-        whiteLines.push(new Rect(375, 0 + i * 50, 50, 50, "white", 50));
+        whiteLines.push(new Rect(375, 0 + i * 50, 50, 50, "white", 5));
       }
 
       function draw() {
@@ -67,9 +67,9 @@
         }
 
         redLanes = redLanes.filter((object) => object.y < 600);
-        if (redLanes.length < 6) {
-          redLanes.push(new Rect(200, 0, 50, 50, "red", 5));
-          redLanes.push(new Rect(550, 0, 50, 50, "red", 5));
+        if (redLanes.length < 12) {
+          redLanes.push(new Rect(200, -50, 50, 50, "red", 5));
+          redLanes.push(new Rect(550, -50, 50, 50, "red", 5));
         }
       }
 
