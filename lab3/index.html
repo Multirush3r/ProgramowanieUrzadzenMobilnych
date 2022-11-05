@@ -104,6 +104,7 @@
             ) {
               this.dy = -this.dy;
               targetArray.splice(i, 1);
+              score++;
             }
           }
 
@@ -142,8 +143,11 @@
         targetArray.push(new Target(0 + i * 50, 50, 50, 25, 2));
       }
 
-      let player = new Player(350, 550, 150, 25, 8);
-      let bullet = new Bullet(375, 500, 5, 8, -8);
+      let player = new Player(350, 550, 150, 25, 20);
+      let bullet = new Bullet(375, 500, 5, 2, -2);
+
+      let score = 0;
+      c.font = "30px Arial";
 
       function animate() {
         requestAnimationFrame(animate);
@@ -155,6 +159,8 @@
 
         player.update();
         bullet.update();
+
+        c.fillText("Score: " + score, 350, 300);
       }
 
       animate();
