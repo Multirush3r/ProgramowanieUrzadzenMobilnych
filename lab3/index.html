@@ -90,10 +90,36 @@
           c.closePath();
         };
 
+        // this.collide = function() {
+        //     if()
+        // }
+
+        function collision(o1, o2) {
+          if (
+            o1.x + o1.w >= o2.x &&
+            o1.x <= o2.x + o2.w &&
+            o1.y + o1.h >= o2.y &&
+            o1.y <= o2.y + o2.h
+          )
+            return true;
+        }
+
         this.update = function () {
+          if (this.x + this.r > 800 || this.x - this.r < 0) {
+            this.dx = -this.dx;
+          }
+          if (this.y - this.r < 0) {
+            this.dy = -this.dy;
+          }
+
           this.x += this.dx;
           this.y += this.dy;
+          this.draw();
         };
+
+        // this.collide = function() {
+
+        // }
       }
 
       let targetArray = [];
@@ -102,7 +128,8 @@
         targetArray.push(new Target(0 + i * 50, 50, 50, 25, 2));
       }
 
-      let player = new Player(400, 575, 75, 25, 8);
+      let player = new Player(350, 550, 150, 25, 8);
+      let bullet = new Bullet(375, 500, 5, 8, -8);
 
       function animate() {
         requestAnimationFrame(animate);
@@ -113,6 +140,7 @@
         }
 
         player.update();
+        bullet.update();
       }
 
       animate();
