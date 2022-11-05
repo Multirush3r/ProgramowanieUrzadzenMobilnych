@@ -9,6 +9,40 @@
       canvas.height = 600;
       canvas.style.border = "1px solid black";
       let c = canvas.getContext("2d");
+
+      let colors = ["red", "green", "blue"];
+
+      function Target(x, y, w, h) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.color = colors[Math.random() * 2];
+
+        this.draw = function () {
+          c.beginPath();
+          c.rect(this.x, this.y, this.w, this.h);
+          c.fillStyle = color;
+          c.strokeStyle = color;
+          c.fill();
+          c.stroke();
+          c.closePath();
+        };
+      }
+
+      let targetArray = [];
+      for (let i = 0; i < 16; i++) {
+        targetArray.push(new Target(0 + i * 50, 0, 50, 25));
+      }
+
+      function animate() {
+        requestAnimationFrame(animate);
+        c.clearRect(0, 0, 800, 600);
+
+        for (let i = 0; i < targetArray.length; i++) {
+          targetArray[i].draw();
+        }
+      }
     </script>
   </body>
 </html>
