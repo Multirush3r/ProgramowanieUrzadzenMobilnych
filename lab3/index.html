@@ -91,10 +91,10 @@
         };
 
         this.collide = function () {
+          let o1x = this.x - this.r;
+          let o1y = this.y - this.r;
+          let o1w = this.r * 2;
           for (let i = 0; i < targetArray.length; i++) {
-            let o1x = this.x - this.r;
-            let o1y = this.y - this.r;
-            let o1w = this.r * 2;
             let o2 = targetArray[i];
             if (
               o1x + o1w >= o2.x &&
@@ -105,6 +105,15 @@
               this.dy = -this.dy;
               targetArray.splice(i, 1);
             }
+          }
+
+          if (
+            o1x + o1w >= player.x &&
+            o1x <= player.x + player.w &&
+            o1y + o1w >= player.y &&
+            o1y <= player.y + player.h
+          ) {
+            this.dy = -this.dy;
           }
         };
 
