@@ -90,19 +90,23 @@
           c.closePath();
         };
 
-        // this.collide = function() {
-        //     if()
-        // }
-
-        function collision(o1, o2) {
-          if (
-            o1.x + o1.w >= o2.x &&
-            o1.x <= o2.x + o2.w &&
-            o1.y + o1.h >= o2.y &&
-            o1.y <= o2.y + o2.h
-          )
-            return true;
-        }
+        this.collide = function () {
+          for (let i = 0; i < targetArray.length; i++) {
+            let o1x = this.x - this.r;
+            let o1y = this.y - this.r;
+            let o1w = this.r * 2;
+            let o2 = targetArray[i];
+            if (
+              o1x + o1w >= o2.x &&
+              o1x <= o2.x + o2.w &&
+              o1y + o1w >= o2.y &&
+              o1y <= o2.y + o2.h
+            ) {
+              this.dy = -this.dy;
+              targetArray.splice(i, 1);
+            }
+          }
+        };
 
         this.update = function () {
           if (this.x + this.r > 800 || this.x - this.r < 0) {
@@ -111,6 +115,7 @@
           if (this.y - this.r < 0) {
             this.dy = -this.dy;
           }
+          this.collide();
 
           this.x += this.dx;
           this.y += this.dy;
