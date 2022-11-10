@@ -37,6 +37,7 @@
         this.y = y;
         this.w = w;
         this.h = h;
+        this.velocity = velocity;
         this.color = color;
 
         this.draw = function () {
@@ -49,7 +50,7 @@
         };
 
         this.update = function () {
-          this.y += velocity;
+          this.y += this.velocity;
         };
       }
 
@@ -164,21 +165,29 @@
       let car = new Car(375, 400, 7, "red");
       let enemy = new Enemy(300 + 150 * getRandomInt(2), -100, 5, "blue");
 
-      function draw() {
-        c.clearRect(0, 0, 800, 600);
-
+      function drawStatic() {
         for (let i = 0; i < staticRects.length; i++) {
           staticRects[i].draw();
         }
         for (let i = 0; i < redLanes.length; i++) {
           redLanes[i].draw();
         }
-        for (let i = 0; i < whiteLines; i++) {
+        for (let i = 0; i < whiteLines.length; i++) {
           whiteLines[i].draw();
         }
+      }
+
+      function draw() {
+        c.clearRect(0, 0, 800, 600);
+
+        drawStatic();
 
         car.update();
         enemy.update();
+
+        if (enemy.y > 600) {
+          enemy = new Enemy(300 + 150 * getRandomInt(2), -100, 5, "blue");
+        }
 
         for (let i = 0; i < redLanes.length; i++) {
           redLanes[i].update();
