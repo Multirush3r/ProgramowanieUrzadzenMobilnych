@@ -166,6 +166,21 @@
           c.closePath();
         };
 
+        this.collide = function () {
+          let o1x = this.x - this.r;
+          let o1y = this.y - this.r;
+          let o1w = this.r * 2;
+          if (
+            o1x + o1w >= enemy.x &&
+            o1x <= enemy.x + enemy.w &&
+            o1y + o1w >= enemy.y &&
+            o1y <= enemy.y + enemy.h
+          ) {
+            enemy = null;
+            score++;
+          }
+        };
+
         this.update = function () {
           this.y -= this.dy;
           this.draw();
@@ -194,6 +209,9 @@
 
       let car = new Car(375, 400, 7, "red");
       let enemy = new Enemy(300 + 150 * getRandomInt(2), -100, 5, "blue");
+
+      let score = 0;
+      c.font = "30px Arial";
 
       function drawStatic() {
         for (let i = 0; i < staticRects.length; i++) {
@@ -241,6 +259,8 @@
         for (let i = 0; i < bulletArray.length; i++) {
           bulletArray[i].update();
         }
+
+        c.fillText("Score: " + score, 600, 50);
       }
 
       setInterval(draw, 10);
