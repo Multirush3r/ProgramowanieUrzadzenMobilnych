@@ -14,10 +14,21 @@
         const key = event.key;
 
         if (key === "ArrowLeft") {
-          car.goLeft();
+          car.goLeft = true;
         }
         if (key === "ArrowRight") {
-          car.goRight();
+          car.goRight = true;
+        }
+      });
+
+      document.addEventListener("keyup", (event) => {
+        const key = event.key;
+
+        if (key === "ArrowLeft") {
+          car.goLeft = false;
+        }
+        if (key === "ArrowRight") {
+          car.goRight = false;
         }
       });
 
@@ -48,6 +59,9 @@
         this.dx = dx;
         this.color = color;
 
+        this.goLeft = false;
+        this.goRight = false;
+
         this.draw = function () {
           c.beginPath();
           c.rect(this.x, this.y, 50, 100);
@@ -57,11 +71,14 @@
           c.closePath();
         };
 
-        this.goLeft = function () {
-          this.x -= 5;
-        };
-        this.goRight = function () {
-          this.x += 5;
+        this.update = function () {
+          if (this.goLeft) {
+            if (this.x > 0) this.x -= this.dx;
+          }
+          if (this.goRight) {
+            if (this.x + 50 < 800) this.x += this.dx;
+          }
+          this.draw();
         };
       }
 
@@ -95,7 +112,7 @@
           whiteLines[i].draw();
         }
 
-        car.draw();
+        car.update();
 
         for (let i = 0; i < redLanes.length; i++) {
           redLanes[i].update();
