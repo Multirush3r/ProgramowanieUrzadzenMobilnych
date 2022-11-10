@@ -110,9 +110,19 @@
           ) {
             console.log("HIT");
             this.x = 375;
-            return true;
           }
-          return false;
+
+          if (
+            bonus != null &&
+            this.x + this.w >= bonus.x &&
+            this.x <= bonus.x + bonus.w &&
+            this.y + this.h >= bonus.y &&
+            this.y <= bonus.y + bonus.h
+          ) {
+            console.log("GOLD");
+            bonus = null;
+            score++;
+          }
         };
 
         this.update = function () {
@@ -195,7 +205,6 @@
           ) {
             console.log("BULET HIT");
             enemy = null;
-            score++;
           }
         };
 
@@ -226,7 +235,14 @@
 
       let bulletArray = [];
 
-      let bonus = new Rect(300 + 150 * getRandomInt(2), -50, 5, "yellow");
+      let bonus = new Rect(
+        300 + 150 * getRandomInt(2),
+        -300,
+        50,
+        50,
+        "yellow",
+        5
+      );
 
       let car = new Car(375, 400, 7, "red");
       let enemy = new Enemy(300 + 150 * getRandomInt(2), -100, 5, "blue");
@@ -244,6 +260,8 @@
         for (let i = 0; i < whiteLines.length; i++) {
           whiteLines[i].draw();
         }
+
+        if (bonus) bonus.draw();
       }
 
       function draw() {
@@ -255,13 +273,19 @@
           enemy = new Enemy(300 + 150 * getRandomInt(2), -100, 5, "blue");
         }
         if (bonus == null || bonus.y > 600) {
-          bonus = new Rect(300 + 150 * getRandomInt(2), -50, 5, "yellow");
+          bonus = new Rect(
+            300 + 150 * getRandomInt(2),
+            -300,
+            50,
+            50,
+            "yellow",
+            5
+          );
         }
 
         car.update();
         enemy.update();
-
-        bonus.update();
+        if (bonus) bonus.update();
 
         for (let i = 0; i < redLanes.length; i++) {
           redLanes[i].update();
