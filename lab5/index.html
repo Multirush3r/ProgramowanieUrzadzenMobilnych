@@ -100,6 +100,21 @@
           bulletArray.push(new Bullet(this.x + this.w / 2, this.y, 5, 10));
         };
 
+        this.collide = function () {
+          if (
+            enemy != null &&
+            this.x + this.w >= enemy.x &&
+            this.x <= enemy.x + enemy.w &&
+            this.y + this.h >= enemy.y &&
+            this.y <= enemy.y + enemy.h
+          ) {
+            console.log("HIT");
+            this.x = 375;
+            return true;
+          }
+          return false;
+        };
+
         this.update = function () {
           if (this.goLeft) {
             if (this.x > 0) this.x -= this.dx;
@@ -107,6 +122,7 @@
           if (this.goRight) {
             if (this.x + 50 < 800) this.x += this.dx;
           }
+          this.collide();
           this.draw();
         };
       }
@@ -171,11 +187,13 @@
           let o1y = this.y - this.r;
           let o1w = this.r * 2;
           if (
+            enemy != null &&
             o1x + o1w >= enemy.x &&
             o1x <= enemy.x + enemy.w &&
             o1y + o1w >= enemy.y &&
             o1y <= enemy.y + enemy.h
           ) {
+            console.log("BULET HIT");
             enemy = null;
             score++;
           }
@@ -183,6 +201,7 @@
 
         this.update = function () {
           this.y -= this.dy;
+          this.collide();
           this.draw();
         };
       }
@@ -230,12 +249,12 @@
 
         drawStatic();
 
-        car.update();
-        enemy.update();
-
-        if (enemy.y > 600) {
+        if (enemy == null || enemy.y > 600) {
           enemy = new Enemy(300 + 150 * getRandomInt(2), -100, 5, "blue");
         }
+
+        car.update();
+        enemy.update();
 
         for (let i = 0; i < redLanes.length; i++) {
           redLanes[i].update();
