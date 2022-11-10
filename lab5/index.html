@@ -224,7 +224,9 @@
         whiteLines.push(new Rect(390, -100 + i * 100, 25, 50, "white", 5));
       }
 
-      bulletArray = [];
+      let bulletArray = [];
+
+      let bonus = new Rect(300 + 150 * getRandomInt(2), -50, 5, "yellow");
 
       let car = new Car(375, 400, 7, "red");
       let enemy = new Enemy(300 + 150 * getRandomInt(2), -100, 5, "blue");
@@ -252,9 +254,14 @@
         if (enemy == null || enemy.y > 600) {
           enemy = new Enemy(300 + 150 * getRandomInt(2), -100, 5, "blue");
         }
+        if (bonus == null || bonus.y > 600) {
+          bonus = new Rect(300 + 150 * getRandomInt(2), -50, 5, "yellow");
+        }
 
         car.update();
         enemy.update();
+
+        bonus.update();
 
         for (let i = 0; i < redLanes.length; i++) {
           redLanes[i].update();
