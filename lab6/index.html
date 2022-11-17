@@ -10,6 +10,8 @@
       canvas.style = "border: 1px solid black";
       let c = canvas.getContext("2d");
 
+      let globalSpeed = 5;
+
       document.addEventListener("keydown", (event) => {
         const key = event.key;
 
@@ -21,6 +23,12 @@
         }
         if (key === " ") {
           car.shoot();
+        }
+        if (key === "a") {
+          if (globalSpeed < 10) globalSpeed++;
+        }
+        if (key === "z") {
+          if (globalSpeed > 1) globalSpeed--;
         }
       });
 
@@ -228,9 +236,15 @@
       let redLanes = [];
       let whiteLines = [];
       for (let i = 0; i < 8; i++) {
-        redLanes.push(new Rect(200, -100 + i * 100, 50, 50, "red", 5));
-        redLanes.push(new Rect(550, -100 + i * 100, 50, 50, "red", 5));
-        whiteLines.push(new Rect(390, -100 + i * 100, 25, 50, "white", 5));
+        redLanes.push(
+          new Rect(200, -100 + i * 100, 50, 50, "red", globalSpeed)
+        );
+        redLanes.push(
+          new Rect(550, -100 + i * 100, 50, 50, "red", globalSpeed)
+        );
+        whiteLines.push(
+          new Rect(390, -100 + i * 100, 25, 50, "white", globalSpeed)
+        );
       }
 
       let bulletArray = [];
@@ -241,11 +255,16 @@
         50,
         50,
         "yellow",
-        5
+        globalSpeed
       );
 
       let car = new Car(375, 400, 7, "red");
-      let enemy = new Enemy(300 + 150 * getRandomInt(2), -100, 5, "blue");
+      let enemy = new Enemy(
+        300 + 150 * getRandomInt(2),
+        -100,
+        globalSpeed,
+        "blue"
+      );
 
       let score = 0;
       c.font = "30px Arial";
@@ -270,7 +289,12 @@
         drawStatic();
 
         if (enemy == null || enemy.y > 600) {
-          enemy = new Enemy(300 + 150 * getRandomInt(2), -100, 5, "blue");
+          enemy = new Enemy(
+            300 + 150 * getRandomInt(2),
+            -100,
+            globalSpeed,
+            "blue"
+          );
         }
         if (bonus == null || bonus.y > 600) {
           bonus = new Rect(
@@ -279,7 +303,7 @@
             50,
             50,
             "yellow",
-            5
+            globalSpeed
           );
         }
 
@@ -294,16 +318,30 @@
           whiteLines[i].update();
         }
 
-        redLanes = redLanes.filter((object) => object.y < 600);
-        if (redLanes.length < 16) {
-          redLanes.push(new Rect(200, -100, 50, 50, "red", 5));
-          redLanes.push(new Rect(550, -100, 50, 50, "red", 5));
-        }
+        // redLanes = redLanes.filter((object) => object.y < 600);
+        // if (redLanes.length < 16) {
+        //   redLanes.push(new Rect(200, -100, 50, 50, "red", globalSpeed));
+        //   redLanes.push(new Rect(550, -100, 50, 50, "red", globalSpeed));
+        // }
 
-        whiteLines = whiteLines.filter((object) => object.y < 600);
-        if (whiteLines.length < 8) {
-          whiteLines.push(new Rect(390, -100, 25, 50, "white", 5));
-        }
+        redLanes.forEach((lane) => {
+          lane.velocity = globalSpeed;
+          if (lane.y > 600) {
+            lane.y = -100;
+          }
+        });
+
+        whiteLines.forEach((line) => {
+          line.velocity = globalSpeed;
+          if (line.y > 600) {
+            line.y = -100;
+          }
+        });
+
+        // whiteLines = whiteLines.filter((object) => object.y < 600);
+        // if (whiteLines.length < 8) {
+        //   whiteLines.push(new Rect(390, -100, 25, 50, "white", globalSpeed));
+        // }
 
         bulletArray = bulletArray.filter((bullet) => bullet.y > 0);
         for (let i = 0; i < bulletArray.length; i++) {
