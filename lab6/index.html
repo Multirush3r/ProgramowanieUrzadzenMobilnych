@@ -101,14 +101,7 @@
           this.draw = function () {
             for (let i = 0; i < 2; i++) {
               c.beginPath();
-              c.arc(
-                this.x + 50 * i + offset,
-                this.y + 15,
-                10,
-                0,
-                Math.PI * 2,
-                false
-              );
+              c.arc(this.x + 50 * i, this.y + 15, 10, 0, Math.PI * 2, false);
               c.fillStyle = "grey";
               c.fill();
               c.stroke();
@@ -116,14 +109,7 @@
             }
             for (let i = 0; i < 2; i++) {
               c.beginPath();
-              c.arc(
-                this.x + 50 * i + offset,
-                this.y + 75,
-                10,
-                0,
-                Math.PI * 2,
-                false
-              );
+              c.arc(this.x + 50 * i, this.y + 75, 10, 0, Math.PI * 2, false);
               c.fillStyle = "grey";
               c.fill();
               c.stroke();
@@ -131,7 +117,7 @@
             }
 
             c.beginPath();
-            c.rect(this.x + offset, this.y, this.w, this.h);
+            c.rect(this.x, this.y, this.w, this.h);
             c.fillStyle = color;
             c.fill();
             c.stroke();
@@ -197,14 +183,7 @@
         this.draw = function () {
           for (let i = 0; i < 2; i++) {
             c.beginPath();
-            c.arc(
-              this.x + 50 * i + offset,
-              this.y + 15,
-              10,
-              0,
-              Math.PI * 2,
-              false
-            );
+            c.arc(this.x + 50 * i, this.y + 15, 10, 0, Math.PI * 2, false);
             c.fillStyle = "grey";
             c.fill();
             c.stroke();
@@ -212,14 +191,7 @@
           }
           for (let i = 0; i < 2; i++) {
             c.beginPath();
-            c.arc(
-              this.x + 50 * i + offset,
-              this.y + 75,
-              10,
-              0,
-              Math.PI * 2,
-              false
-            );
+            c.arc(this.x + 50 * i, this.y + 75, 10, 0, Math.PI * 2, false);
             c.fillStyle = "grey";
             c.fill();
             c.stroke();
@@ -326,12 +298,15 @@
 
       function drawStatic() {
         for (let i = 0; i < staticRects.length; i++) {
+          staticRects[i].x += offset;
           staticRects[i].draw();
         }
         for (let i = 0; i < redLanes.length; i++) {
+          redLanes[i].x += offset;
           redLanes[i].draw();
         }
         for (let i = 0; i < whiteLines.length; i++) {
+          whiteLines[i].x += offset;
           whiteLines[i].draw();
         }
 
@@ -377,6 +352,7 @@
           lane.velocity = globalSpeed;
           if (lane.y > 600) {
             lane.y = -100;
+            lane.x += offset;
           }
         });
 
@@ -384,6 +360,7 @@
           line.velocity = globalSpeed;
           if (line.y > 600) {
             line.y = -100;
+            line.x += offset;
           }
         });
 
