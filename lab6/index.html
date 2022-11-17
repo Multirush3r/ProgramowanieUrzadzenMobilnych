@@ -37,6 +37,12 @@
         if (key === "z") {
           if (globalSpeed > 1) globalSpeed--;
         }
+        if (key === "p") {
+          offset += 5;
+        }
+        if (key === "l") {
+          offset -= 5;
+        }
       });
 
       document.addEventListener("keyup", (event) => {
@@ -88,12 +94,21 @@
 
         this.goLeft = false;
         this.goRight = false;
+        this.goUp = false;
+        this.goDown = false;
 
         this.draw = function () {
           this.draw = function () {
             for (let i = 0; i < 2; i++) {
               c.beginPath();
-              c.arc(this.x + 50 * i, this.y + 15, 10, 0, Math.PI * 2, false);
+              c.arc(
+                this.x + 50 * i + offset,
+                this.y + 15,
+                10,
+                0,
+                Math.PI * 2,
+                false
+              );
               c.fillStyle = "grey";
               c.fill();
               c.stroke();
@@ -101,7 +116,14 @@
             }
             for (let i = 0; i < 2; i++) {
               c.beginPath();
-              c.arc(this.x + 50 * i, this.y + 75, 10, 0, Math.PI * 2, false);
+              c.arc(
+                this.x + 50 * i + offset,
+                this.y + 75,
+                10,
+                0,
+                Math.PI * 2,
+                false
+              );
               c.fillStyle = "grey";
               c.fill();
               c.stroke();
@@ -109,7 +131,7 @@
             }
 
             c.beginPath();
-            c.rect(this.x, this.y, this.w, this.h);
+            c.rect(this.x + offset, this.y, this.w, this.h);
             c.fillStyle = color;
             c.fill();
             c.stroke();
@@ -175,7 +197,14 @@
         this.draw = function () {
           for (let i = 0; i < 2; i++) {
             c.beginPath();
-            c.arc(this.x + 50 * i, this.y + 15, 10, 0, Math.PI * 2, false);
+            c.arc(
+              this.x + 50 * i + offset,
+              this.y + 15,
+              10,
+              0,
+              Math.PI * 2,
+              false
+            );
             c.fillStyle = "grey";
             c.fill();
             c.stroke();
@@ -183,7 +212,14 @@
           }
           for (let i = 0; i < 2; i++) {
             c.beginPath();
-            c.arc(this.x + 50 * i, this.y + 75, 10, 0, Math.PI * 2, false);
+            c.arc(
+              this.x + 50 * i + offset,
+              this.y + 75,
+              10,
+              0,
+              Math.PI * 2,
+              false
+            );
             c.fillStyle = "grey";
             c.fill();
             c.stroke();
@@ -247,29 +283,29 @@
       }
 
       let staticRects = [];
-      let left_grass = new Rect(0, 0, 200, 600, "green", 0);
-      let right_grass = new Rect(600, 0, 200, 600, "green", 0);
-      let lane = new Rect(250, 0, 300, 600, "black");
+      let left_grass = new Rect(0 + offset, 0, 200, 600, "green", 0);
+      let right_grass = new Rect(600 + offset, 0, 200, 600, "green", 0);
+      let lane = new Rect(250 + offset, 0, 300, 600, "black");
       staticRects.push(left_grass, right_grass, lane);
 
       let redLanes = [];
       let whiteLines = [];
       for (let i = 0; i < 8; i++) {
         redLanes.push(
-          new Rect(200, -100 + i * 100, 50, 50, "red", globalSpeed)
+          new Rect(200 + offset, -100 + i * 100, 50, 50, "red", globalSpeed)
         );
         redLanes.push(
-          new Rect(550, -100 + i * 100, 50, 50, "red", globalSpeed)
+          new Rect(550 + offset, -100 + i * 100, 50, 50, "red", globalSpeed)
         );
         whiteLines.push(
-          new Rect(390, -100 + i * 100, 25, 50, "white", globalSpeed)
+          new Rect(390 + offset, -100 + i * 100, 25, 50, "white", globalSpeed)
         );
       }
 
       let bulletArray = [];
 
       let bonus = new Rect(
-        300 + 150 * getRandomInt(2),
+        300 + 150 * getRandomInt(2) + offset,
         -300,
         50,
         50,
@@ -277,9 +313,9 @@
         globalSpeed
       );
 
-      let car = new Car(375, 400, 7, "red");
+      let car = new Car(375 + offset, 400, 7, "red");
       let enemy = new Enemy(
-        300 + 150 * getRandomInt(2),
+        300 + 150 * getRandomInt(2) + offset,
         -100,
         globalSpeed,
         "blue"
@@ -309,7 +345,7 @@
 
         if (enemy == null || enemy.y > 600) {
           enemy = new Enemy(
-            300 + 150 * getRandomInt(2),
+            300 + 150 * getRandomInt(2) + offset,
             -100,
             globalSpeed,
             "blue"
@@ -317,7 +353,7 @@
         }
         if (bonus == null || bonus.y > 600) {
           bonus = new Rect(
-            300 + 150 * getRandomInt(2),
+            300 + 150 * getRandomInt(2) + offset,
             -300,
             50,
             50,
@@ -356,8 +392,8 @@
           bulletArray[i].update();
         }
 
-        c.fillText("Score: " + score, 600, 50);
-        c.fillText("Speed: " + globalSpeed, 600, 100);
+        c.fillText("Score: " + score, 600 + offset, 50);
+        c.fillText("Speed: " + globalSpeed, 600 + offset, 100);
       }
 
       setInterval(draw, 10);
