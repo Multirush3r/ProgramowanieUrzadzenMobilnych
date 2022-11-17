@@ -11,6 +11,7 @@
       let c = canvas.getContext("2d");
 
       let globalSpeed = 5;
+      let offset = 0;
 
       document.addEventListener("keydown", (event) => {
         const key = event.key;
@@ -20,6 +21,12 @@
         }
         if (key === "ArrowRight") {
           car.goRight = true;
+        }
+        if (key === "ArrowUp") {
+          car.goUp = true;
+        }
+        if (key === "ArrowDown") {
+          car.goDown = true;
         }
         if (key === " ") {
           car.shoot();
@@ -40,6 +47,12 @@
         }
         if (key === "ArrowRight") {
           car.goRight = false;
+        }
+        if (key === "ArrowUp") {
+          car.goUp = false;
+        }
+        if (key === "ArrowDown") {
+          car.goDown = false;
         }
       });
 
@@ -139,6 +152,12 @@
           }
           if (this.goRight) {
             if (this.x + 50 < 800) this.x += this.dx;
+          }
+          if (this.goUp) {
+            if (this.y > 0) this.y -= this.dx;
+          }
+          if (this.goDown) {
+            if (this.y + this.h < 600) this.y += this.dx;
           }
           this.collide();
           this.draw();
