@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+  <head> </head>
+  <body>
+    <canvas></canvas>
+    <script>
+      let canvas = document.querySelector("canvas");
+      canvas.width = 800;
+      canvas.height = 600;
+      canvas.style = "border: 1px solid black";
+      let c = canvas.getContext("2d");
+
+      document.addEventListener("keydown", (event) => {
+        const key = event.key;
+
+        if (key === "ArrowLeft") {
+          car.goLeft = true;
+        }
+        if (key === "ArrowRight") {
+          car.goRight = true;
+        }
+        if (key === " ") {
+          car.shoot();
+        }
+      });
+
+      document.addEventListener("keyup", (event) => {
+        const key = event.key;
+
+        if (key === "ArrowLeft") {
+          car.goLeft = false;
+        }
+        if (key === "ArrowRight") {
+          car.goRight = false;
+        }
+      });
+
+      function Rect(x, y, w, h, color, velocity) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.velocity = velocity;
+        this.color = color;
+
+        this.draw = function () {
+          c.beginPath();
+          c.rect(this.x, this.y, this.w, this.h);
+          c.fillStyle = color;
+          c.fill();
+          c.stroke();
+          c.closePath();
+        };
+
+        this.update = function () {
+          this.y += this.velocity;
+        };
+      }
+
+      function Car(x, y, dx, color) {
+        this.x = x;
+        this.y = y;
+        this.w = 50;
+        this.h = 100;
+        this.dx = dx;
+        this.color = color;
+
+        this.goLeft = false;
+        this.goRight = false;
+
+        this.draw = function () {
+          this.draw = function () {
+            for (let i = 0; i < 2; i++) {
+              c.beginPath();
+              c.arc(this.x + 50 * i, this.y + 15, 10, 0, Math.PI * 2, false);
+              c.fillStyle = "grey";
+              c.fill();
+              c.stroke();
+              c.closePath();
+            }
+            for (let i = 0; i < 2; i++) {
+              c.beginPath();
+              c.arc(this.x + 50 * i, this.y + 75, 10, 0, Math.PI * 2, false);
+              c.fillStyle = "grey";
+              c.fill();
+              c.stroke();
+              c.closePath();
+            }
+
+            c.beginPath();
+            c.rect(this.x, this.y, this.w, this.h);
+            c.fillStyle = color;
+            c.fill();
+            c.stroke();
+            c.closePath();
+          };
+        };
+
+        this.shoot = function () {
+          bulletArray.push(new Bullet(this.x + this.w / 2, this.y, 5, 10));
+        };
+
+        this.collide = function () {
+          if (
+            enemy != null &&
+            this.x + this.w >= enemy.x &&
+            this.x <= enemy.x + enemy.w &&
+            this.y + this.h >= enemy.y &&
+            this.y <= enemy.y + enemy.h
+          ) {
+            console.log("HIT");
+            this.x = 375;
+          }
+
+          if (
+            bonus != null &&
+            this.x + this.w >= bonus.x &&
+            this.x <= bonus.x + bonus.w &&
+            this.y + this.h >= bonus.y &&
+            this.y <= bonus.y + bonus.h
+          ) {
+            console.log("GOLD");
+            bonus = null;
+            score++;
+          }
+        };
+
+        this.update = function () {
+          if (this.goLeft) {
+            if (this.x > 0) this.x -= this.dx;
+          }
+          if (this.goRight) {
+            if (this.x + 50 < 800) this.x += this.dx;
+          }
+          this.collide();
+          this.draw();
+        };
+      }
+
+      function Enemy(x, y, dy, color) {
+        this.x = x;
+        this.y = y;
+        this.w = 50;
+        this.h = 100;
+        this.dy = dy;
+        this.color = color;
+
+        this.draw = function () {
+          for (let i = 0; i < 2; i++) {
+            c.beginPath();
+            c.arc(this.x + 50 * i, this.y + 15, 10, 0, Math.PI * 2, false);
+            c.fillStyle = "grey";
+            c.fill();
+            c.stroke();
+            c.closePath();
+          }
+          for (let i = 0; i < 2; i++) {
+            c.beginPath();
+            c.arc(this.x + 50 * i, this.y + 75, 10, 0, Math.PI * 2, false);
+            c.fillStyle = "grey";
+            c.fill();
+            c.stroke();
+            c.closePath();
+          }
+
+          c.beginPath();
+          c.rect(this.x, this.y, this.w, this.h);
+          c.fillStyle = color;
+          c.fill();
+          c.stroke();
+          c.closePath();
+        };
+
+        this.update = function () {
+          this.y += this.dy;
+          this.draw();
+        };
+      }
+
+      function Bullet(x, y, r, dy) {
+        this.x = x;
+        this.y = y;
+        this.r = r;
+        this.dy = dy;
+
+        this.draw = function () {
+          c.beginPath();
+          c.arc(this.x, this.y, this.r, 0, Math.PI * 2, false);
+          c.fillStyle = "grey";
+          c.fill();
+          c.stroke();
+          c.closePath();
+        };
+
+        this.collide = function () {
+          let o1x = this.x - this.r;
+          let o1y = this.y - this.r;
+          let o1w = this.r * 2;
+          if (
+            enemy != null &&
+            o1x + o1w >= enemy.x &&
+            o1x <= enemy.x + enemy.w &&
+            o1y + o1w >= enemy.y &&
+            o1y <= enemy.y + enemy.h
+          ) {
+            console.log("BULET HIT");
+            enemy = null;
+          }
+        };
+
+        this.update = function () {
+          this.y -= this.dy;
+          this.collide();
+          this.draw();
+        };
+      }
+
+      function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+      }
+
+      let staticRects = [];
+      let left_grass = new Rect(0, 0, 200, 600, "green", 0);
+      let right_grass = new Rect(600, 0, 200, 600, "green", 0);
+      let lane = new Rect(250, 0, 300, 600, "black");
+      staticRects.push(left_grass, right_grass, lane);
+
+      let redLanes = [];
+      let whiteLines = [];
+      for (let i = 0; i < 8; i++) {
+        redLanes.push(new Rect(200, -100 + i * 100, 50, 50, "red", 5));
+        redLanes.push(new Rect(550, -100 + i * 100, 50, 50, "red", 5));
+        whiteLines.push(new Rect(390, -100 + i * 100, 25, 50, "white", 5));
+      }
+
+      let bulletArray = [];
+
+      let bonus = new Rect(
+        300 + 150 * getRandomInt(2),
+        -300,
+        50,
+        50,
+        "yellow",
+        5
+      );
+
+      let car = new Car(375, 400, 7, "red");
+      let enemy = new Enemy(300 + 150 * getRandomInt(2), -100, 5, "blue");
+
+      let score = 0;
+      c.font = "30px Arial";
+
+      function drawStatic() {
+        for (let i = 0; i < staticRects.length; i++) {
+          staticRects[i].draw();
+        }
+        for (let i = 0; i < redLanes.length; i++) {
+          redLanes[i].draw();
+        }
+        for (let i = 0; i < whiteLines.length; i++) {
+          whiteLines[i].draw();
+        }
+
+        if (bonus) bonus.draw();
+      }
+
+      function draw() {
+        c.clearRect(0, 0, 800, 600);
+
+        drawStatic();
+
+        if (enemy == null || enemy.y > 600) {
+          enemy = new Enemy(300 + 150 * getRandomInt(2), -100, 5, "blue");
+        }
+        if (bonus == null || bonus.y > 600) {
+          bonus = new Rect(
+            300 + 150 * getRandomInt(2),
+            -300,
+            50,
+            50,
+            "yellow",
+            5
+          );
+        }
+
+        car.update();
+        enemy.update();
+        if (bonus) bonus.update();
+
+        for (let i = 0; i < redLanes.length; i++) {
+          redLanes[i].update();
+        }
+        for (let i = 0; i < whiteLines.length; i++) {
+          whiteLines[i].update();
+        }
+
+        redLanes = redLanes.filter((object) => object.y < 600);
+        if (redLanes.length < 16) {
+          redLanes.push(new Rect(200, -100, 50, 50, "red", 5));
+          redLanes.push(new Rect(550, -100, 50, 50, "red", 5));
+        }
+
+        whiteLines = whiteLines.filter((object) => object.y < 600);
+        if (whiteLines.length < 8) {
+          whiteLines.push(new Rect(390, -100, 25, 50, "white", 5));
+        }
+
+        bulletArray = bulletArray.filter((bullet) => bullet.y > 0);
+        for (let i = 0; i < bulletArray.length; i++) {
+          bulletArray[i].update();
+        }
+
+        c.fillText("Score: " + score, 600, 50);
+      }
+
+      setInterval(draw, 10);
+    </script>
+  </body>
+</html>
