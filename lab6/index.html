@@ -318,12 +318,6 @@
           whiteLines[i].update();
         }
 
-        // redLanes = redLanes.filter((object) => object.y < 600);
-        // if (redLanes.length < 16) {
-        //   redLanes.push(new Rect(200, -100, 50, 50, "red", globalSpeed));
-        //   redLanes.push(new Rect(550, -100, 50, 50, "red", globalSpeed));
-        // }
-
         redLanes.forEach((lane) => {
           lane.velocity = globalSpeed;
           if (lane.y > 600) {
@@ -338,17 +332,13 @@
           }
         });
 
-        // whiteLines = whiteLines.filter((object) => object.y < 600);
-        // if (whiteLines.length < 8) {
-        //   whiteLines.push(new Rect(390, -100, 25, 50, "white", globalSpeed));
-        // }
-
         bulletArray = bulletArray.filter((bullet) => bullet.y > 0);
         for (let i = 0; i < bulletArray.length; i++) {
           bulletArray[i].update();
         }
 
         c.fillText("Score: " + score, 600, 50);
+        c.fillText("Speed: " + globalSpeed, 600, 100);
       }
 
       setInterval(draw, 10);
