@@ -83,6 +83,7 @@
           c.beginPath();
           c.rect(this.x, this.y, this.w, this.h);
           c.fillStyle = this.color;
+          c.strokeStyle = this.color;
           c.fill();
           c.stroke();
           c.closePath();
@@ -113,6 +114,7 @@
               c.beginPath();
               c.arc(this.x + 50 * i, this.y + 15, 10, 0, Math.PI * 2, false);
               c.fillStyle = "grey";
+              c.strokeStyle = "grey";
               c.fill();
               c.stroke();
               c.closePath();
@@ -121,6 +123,7 @@
               c.beginPath();
               c.arc(this.x + 50 * i, this.y + 75, 10, 0, Math.PI * 2, false);
               c.fillStyle = "grey";
+              c.strokeStyle = "grey";
               c.fill();
               c.stroke();
               c.closePath();
@@ -128,7 +131,8 @@
 
             c.beginPath();
             c.rect(this.x, this.y, this.w, this.h);
-            c.fillStyle = color;
+            c.fillStyle = this.color;
+            c.strokeStyle = this.color;
             c.fill();
             c.stroke();
             c.closePath();
@@ -197,6 +201,7 @@
             c.beginPath();
             c.arc(this.x + 50 * i, this.y + 15, 10, 0, Math.PI * 2, false);
             c.fillStyle = "grey";
+            c.strokeStyle = "grey";
             c.fill();
             c.stroke();
             c.closePath();
@@ -205,6 +210,7 @@
             c.beginPath();
             c.arc(this.x + 50 * i, this.y + 75, 10, 0, Math.PI * 2, false);
             c.fillStyle = "grey";
+            c.strokeStyle = "grey";
             c.fill();
             c.stroke();
             c.closePath();
@@ -212,7 +218,8 @@
 
           c.beginPath();
           c.rect(this.x, this.y, this.w, this.h);
-          c.fillStyle = color;
+          c.fillStyle = this.color;
+          c.strokeStyle = this.color;
           c.fill();
           c.stroke();
           c.closePath();
@@ -234,6 +241,7 @@
           c.beginPath();
           c.arc(this.x, this.y, this.r, 0, Math.PI * 2, false);
           c.fillStyle = "grey";
+          c.strokeStyle = "grey";
           c.fill();
           c.stroke();
           c.closePath();
