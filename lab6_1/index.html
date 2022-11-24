@@ -428,6 +428,9 @@
           bulletArray[i].update();
         }
 
+        c.beginPath();
+        c.fillStyle = "yellow";
+        c.fill();
         c.fillText("Score: " + score, 650, 50);
         c.fillText("Speed: " + globalSpeed, 650, 100);
 
@@ -435,6 +438,7 @@
           c.fillText("GAME OVER", 300, 200);
           c.fillText("Press R to start again", 300, 250);
         }
+        c.closePath();
       }
 
       setInterval(draw, 10);
