@@ -371,10 +371,22 @@
       let score = 0;
       c.font = "30px Arial";
 
+      let roadArray = [];
+      let road = new Road(-800, offset);
+      let road2 = new Road(-2200, 50);
+      roadArray.push(road, road2);
+
       function draw() {
         c.clearRect(0, 0, 800, 600);
 
-        drawStatic();
+        for (let i = 0; i < roadArray.length; i++) {
+          roadArray[i].update();
+
+          if (roadArray[i].y >= 600) {
+            offset = -50 + getRandomInt(3) * 50;
+            roadArray[i] = new Road(-2200, offset);
+          }
+        }
 
         if (enemy == null || enemy.y > 600) {
           enemy = new Enemy(
@@ -398,13 +410,6 @@
         car.update();
         enemy.update();
         if (bonus) bonus.update();
-
-        for (let i = 0; i < redLanes.length; i++) {
-          redLanes[i].update();
-        }
-        for (let i = 0; i < whiteLines.length; i++) {
-          whiteLines[i].update();
-        }
 
         bulletArray = bulletArray.filter((bullet) => bullet.y > 0);
         for (let i = 0; i < bulletArray.length; i++) {
