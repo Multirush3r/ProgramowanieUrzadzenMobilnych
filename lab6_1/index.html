@@ -329,31 +329,24 @@
           }
         };
 
-        this.update = function () {};
+        this.update = function () {
+          this.lane.update();
+          this.left_grass.update();
+          this.right_grass.update();
+
+          for (let i = 0; i < this.redLines.length; i++) {
+            this.redLines[i].update();
+          }
+          for (let i = 0; i < this.whiteLines.length; i++) {
+            this.whiteLines[i].update();
+          }
+
+          this.y += globalSpeed;
+        };
       }
 
       function getRandomInt(max) {
         return Math.floor(Math.random() * max);
-      }
-
-      let staticRects = [];
-      let left_grass = new Rect(0 + offset, 0, 200, 600, "green", 0);
-      let right_grass = new Rect(600 + offset, 0, 200, 600, "green", 0);
-      let lane = new Rect(250 + offset, 0, 300, 600, "black");
-      staticRects.push(left_grass, right_grass, lane);
-
-      let redLanes = [];
-      let whiteLines = [];
-      for (let i = 0; i < 8; i++) {
-        redLanes.push(
-          new Rect(200 + offset, -100 + i * 100, 50, 50, "red", globalSpeed)
-        );
-        redLanes.push(
-          new Rect(550 + offset, -100 + i * 100, 50, 50, "red", globalSpeed)
-        );
-        whiteLines.push(
-          new Rect(390 + offset, -100 + i * 100, 25, 50, "white", globalSpeed)
-        );
       }
 
       let bulletArray = [];
@@ -377,23 +370,6 @@
 
       let score = 0;
       c.font = "30px Arial";
-
-      function drawStatic() {
-        for (let i = 0; i < staticRects.length; i++) {
-          staticRects[i].x += offset;
-          staticRects[i].draw();
-        }
-        for (let i = 0; i < redLanes.length; i++) {
-          redLanes[i].x += offset;
-          redLanes[i].draw();
-        }
-        for (let i = 0; i < whiteLines.length; i++) {
-          whiteLines[i].x += offset;
-          whiteLines[i].draw();
-        }
-
-        if (bonus) bonus.draw();
-      }
 
       function draw() {
         c.clearRect(0, 0, 800, 600);
@@ -429,22 +405,6 @@
         for (let i = 0; i < whiteLines.length; i++) {
           whiteLines[i].update();
         }
-
-        redLanes.forEach((lane) => {
-          lane.velocity = globalSpeed;
-          if (lane.y > 600) {
-            lane.y = -100;
-            lane.x += offset;
-          }
-        });
-
-        whiteLines.forEach((line) => {
-          line.velocity = globalSpeed;
-          if (line.y > 600) {
-            line.y = -100;
-            line.x += offset;
-          }
-        });
 
         bulletArray = bulletArray.filter((bullet) => bullet.y > 0);
         for (let i = 0; i < bulletArray.length; i++) {
