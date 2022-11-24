@@ -12,9 +12,18 @@
 
       let globalSpeed = 5;
       let offset = 0;
+      let gameOver = false;
 
       document.addEventListener("keydown", (event) => {
         const key = event.key;
+
+        if (key === "r") {
+          score = 0;
+          globalSpeed = 5;
+          gameOver = false;
+        }
+
+        if (gameOver) berak;
 
         if (key === "ArrowLeft") {
           car.goLeft = true;
@@ -73,7 +82,7 @@
         this.draw = function () {
           c.beginPath();
           c.rect(this.x, this.y, this.w, this.h);
-          c.fillStyle = color;
+          c.fillStyle = this.color;
           c.fill();
           c.stroke();
           c.closePath();
@@ -131,6 +140,7 @@
         };
 
         this.collide = function () {
+          if (gameOver) return;
           if (
             enemy != null &&
             this.x + this.w >= enemy.x &&
@@ -139,7 +149,8 @@
             this.y <= enemy.y + enemy.h
           ) {
             console.log("HIT");
-            this.x = 375;
+            this.x = 375 + offset;
+            gameOver = true;
           }
 
           if (
@@ -419,6 +430,11 @@
 
         c.fillText("Score: " + score, 650, 50);
         c.fillText("Speed: " + globalSpeed, 650, 100);
+
+        if (gameOver) {
+          c.fillText("GAME OVER", 300, 200);
+          c.fillText("Press R to start again", 300, 250);
+        }
       }
 
       setInterval(draw, 10);
