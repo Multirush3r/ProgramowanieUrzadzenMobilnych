@@ -254,7 +254,80 @@
         this.y = y;
         this.off = off;
 
-        this.draw = function () {};
+        this.lane = new Rect(
+          250 + this.off,
+          this.y,
+          300,
+          1400,
+          "black",
+          globalSpeed
+        );
+        this.left_grass = new Rect(
+          -50 + this.off,
+          this.y,
+          250,
+          1400,
+          "green",
+          globalSpeed
+        );
+        this.right_grass = new Rect(
+          600 + this.off,
+          this.y,
+          250,
+          1400,
+          "green",
+          globalSpeed
+        );
+
+        this.redLines = [];
+        this.whiteLines = [];
+        this.redLines = [];
+
+        for (let i = 0; i < 14; i++) {
+          this.redLines.push(
+            new Rect(
+              200 + this.off,
+              this.y + i * 100,
+              50,
+              50,
+              "red",
+              globalSpeed
+            )
+          );
+          this.redLines.push(
+            new Rect(
+              550 + this.off,
+              this.y + i * 100,
+              50,
+              50,
+              "red",
+              globalSpeed
+            )
+          );
+          this.whiteLines.push(
+            new Rect(
+              390 + this.off,
+              this.y + i * 100,
+              25,
+              50,
+              "white",
+              globalSpeed
+            )
+          );
+        }
+
+        this.draw = function () {
+          this.lane.draw();
+          this.left_grass.draw();
+          this.right_grass.draw();
+
+          for (let i = 0; i < this.redLines.length; i++) {
+            this.redLines[i].draw();
+          }
+          for (let i = 0; i < this.whiteLines.length; i++) {
+            this.whiteLines[i].draw();
+          }
+        };
 
         this.update = function () {};
       }
