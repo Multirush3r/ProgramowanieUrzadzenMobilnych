@@ -54,7 +54,14 @@
         this.draw = function () {
           for (let i = 0; i < 2; i++) {
             c.beginPath();
-            c.arc(this.x + i * this.w, this.y, 25, 0, Math.PI * 2, false);
+            c.arc(
+              this.x + i * this.w,
+              this.y + this.h,
+              15,
+              0,
+              Math.PI * 2,
+              false
+            );
             c.fillStyle = "black";
             c.strokeStyle = "black";
             c.fill();
@@ -85,7 +92,14 @@
         this.draw = function () {
           for (let i = 0; i < 2; i++) {
             c.beginPath();
-            c.arc(this.x + i * this.w, this.y, 25, 0, Math.PI * 2, false);
+            c.arc(
+              this.x + i * this.w,
+              this.y + this.h,
+              15,
+              0,
+              Math.PI * 2,
+              false
+            );
             c.fillStyle = "black";
             c.strokeStyle = "black";
             c.fill();
@@ -117,7 +131,7 @@
         this.redLanes = [];
         for (let i = 0; i < canvas.width / this.w / 2 + 1; i++) {
           let lane = new Rect(
-            (this.x + this.w) * i,
+            this.w * 2 * i,
             this.y - this.h,
             this.w,
             this.h,
@@ -136,25 +150,42 @@
           for (let i = 0; i < this.redLanes.length; i++) {
             this.redLanes[i].x -= globalSpeed;
           }
-          this.redLanes.filter((redLane) => redLane.x > 0);
+          this.redLanes = this.redLanes.filter(
+            (redLane) => redLane.x > -this.w
+          );
           if (this.redLanes.length < canvas.width / this.w / 2 + 1) {
             let lane = new Rect(
-              canvas.width,
+              canvas.width + this.w,
               canvas.height - this.h,
               this.w,
               this.h,
               "red"
             );
-            this.redLanes.push;
+            this.redLanes.push(lane);
           }
           this.draw();
         };
       }
 
+      let backgr = new Rect(0, 0, canvas.width, canvas.height, "lightblue");
+      let laneBackgr = new Rect(0, 575, canvas.width, 25, "black");
+
       let road = new Road(0, 600, 100, 25);
+      let car = new Car(50, road.y - 90, 100, 50);
+      let enemy = new Enemy(900, road.y - 90, 100, 50);
 
       function draw() {
+        c.clearRect(0, 0, 800, 600);
+        backgr.draw();
+        laneBackgr.draw();
+
         road.update();
+        enemy.update();
+        car.update();
+
+        if (enemy.x < -enemy.w + 10) {
+          enemy = new Enemy(900, road.y - 90, 100, 50);
+        }
       }
 
       setInterval(draw, 10);
