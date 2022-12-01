@@ -20,12 +20,11 @@
         const key = event.key;
       });
 
-      function Rect(x, y, w, h, color, velocity) {
+      function Rect(x, y, w, h, color) {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
-        this.velocity = velocity;
         this.color = color;
 
         this.draw = function () {
@@ -104,13 +103,59 @@
         };
 
         this.update = function () {
+          this.x -= globalSpeed;
           this.draw();
         };
       }
 
-      function Road() {}
+      function Road(x, y, w, h) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
 
-      function draw() {}
+        this.redLanes = [];
+        for (let i = 0; i < canvas.width / this.w / 2 + 1; i++) {
+          let lane = new Rect(
+            (this.x + this.w) * i,
+            this.y - this.h,
+            this.w,
+            this.h,
+            "red"
+          );
+          this.redLanes.push(lane);
+        }
+
+        this.draw = function () {
+          for (let i = 0; i < this.redLanes.length; i++) {
+            this.redLanes[i].draw();
+          }
+        };
+
+        this.update = function () {
+          for (let i = 0; i < this.redLanes.length; i++) {
+            this.redLanes[i].x -= globalSpeed;
+          }
+          this.redLanes.filter((redLane) => redLane.x > 0);
+          if (this.redLanes.length < canvas.width / this.w / 2 + 1) {
+            let lane = new Rect(
+              canvas.width,
+              canvas.height - this.h,
+              this.w,
+              this.h,
+              "red"
+            );
+            this.redLanes.push;
+          }
+          this.draw();
+        };
+      }
+
+      let road = new Road(0, 600, 100, 25);
+
+      function draw() {
+        road.update();
+      }
 
       setInterval(draw, 10);
     </script>
