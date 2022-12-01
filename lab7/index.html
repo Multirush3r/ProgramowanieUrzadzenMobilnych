@@ -14,10 +14,10 @@
 
       document.addEventListener("keydown", (event) => {
         const key = event.key;
-      });
 
-      document.addEventListener("keyup", (event) => {
-        const key = event.key;
+        if (key === " ") {
+          car.jump();
+        }
       });
 
       function Rect(x, y, w, h, color) {
@@ -45,11 +45,18 @@
       function Car(x, y, w, h) {
         this.x = x;
         this.y = y;
+        this.dy = 0;
         this.w = w;
         this.h = h;
 
+        this.firstY = y;
+
+        this.g = 0.05;
+
         this.goLeft = false;
         this.goRight = false;
+
+        this.jumping = false;
 
         this.draw = function () {
           for (let i = 0; i < 2; i++) {
@@ -78,7 +85,26 @@
           c.closePath();
         };
 
+        this.jump = function () {
+          if (!this.jumping) {
+            this.jumping = true;
+            this.dy = -5;
+          }
+        };
+
+        this.collide = function () {};
+
         this.update = function () {
+          if (this.jumping) {
+            this.y += this.dy;
+            this.dy += 0.05;
+          }
+
+          if (this.y > this.firstY) {
+            this.y = this.firstY;
+            this.jumping = false;
+          }
+
           this.draw();
         };
       }
