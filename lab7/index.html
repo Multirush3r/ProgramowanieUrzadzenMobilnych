@@ -10,11 +10,18 @@
       canvas.style = "border: 1px solid black";
       let c = canvas.getContext("2d");
 
-      globalSpeed = 5;
+      c.font = "30px Arial";
+
+      let globalSpeed = 5;
+      let gameOver = false;
 
       document.addEventListener("keydown", (event) => {
         const key = event.key;
 
+        if (key === "r") {
+          gameOver = false;
+        }
+        if (gameOver) berak;
         if (key === " ") {
           car.jump();
         }
@@ -92,7 +99,19 @@
           }
         };
 
-        this.collide = function () {};
+        this.collide = function () {
+          if (gameOver) return;
+          if (
+            enemy != null &&
+            this.x + this.w >= enemy.x &&
+            this.x <= enemy.x + enemy.w &&
+            this.y + this.h >= enemy.y &&
+            this.y <= enemy.y + enemy.h
+          ) {
+            console.log("HIT");
+            gameOver = true;
+          }
+        };
 
         this.update = function () {
           if (this.jumping) {
@@ -105,6 +124,7 @@
             this.jumping = false;
           }
 
+          this.collide();
           this.draw();
         };
       }
@@ -211,6 +231,11 @@
 
         if (enemy.x < -enemy.w + 10) {
           enemy = new Enemy(900, road.y - 90, 100, 50);
+        }
+
+        if (gameOver) {
+          c.fillText("GAME OVER", 300, 200);
+          c.fillText("Press R to start again", 300, 250);
         }
       }
 
