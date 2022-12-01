@@ -58,7 +58,7 @@
 
         this.firstY = y;
 
-        this.g = 0.05;
+        this.g = 0.09;
 
         this.goLeft = false;
         this.goRight = false;
@@ -95,7 +95,7 @@
         this.jump = function () {
           if (!this.jumping) {
             this.jumping = true;
-            this.dy = -5;
+            this.dy = -7;
           }
         };
 
@@ -116,7 +116,7 @@
         this.update = function () {
           if (this.jumping) {
             this.y += this.dy;
-            this.dy += 0.05;
+            this.dy += this.g;
           }
 
           if (this.y > this.firstY) {
