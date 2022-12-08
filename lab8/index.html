@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head> </head>
+  <body>
+    <canvas></canvas>
+    <script>
+      let canvas = document.querySelector("canvas");
+      canvas.width = 800;
+      canvas.height = 600;
+      canvas.style = "border: 1px solid black";
+      let c = canvas.getContext("2d");
+
+      c.font = "30px Arial";
+
+      document.addEventListener("keydown", (event) => {
+        const key = event.key;
+
+        if (key === "r") {
+          gameOver = false;
+        }
+        if (gameOver) return;
+        if (key === " ") {
+          car.jump();
+        }
+      });
+
+      function Board(x, y, w, h) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+
+        this.draw = function () {};
+
+        this.update = function () {};
+      }
+
+      function draw() {
+        c.clearRect(0, 0, 800, 600);
+      }
+
+      setInterval(draw, 10);
+    </script>
+  </body>
+</html>
