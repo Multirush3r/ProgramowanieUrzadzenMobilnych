@@ -66,6 +66,7 @@
         this.nOfSquares = nOfSquares + 1;
 
         this.squares = [];
+        this.pawns = [];
 
         this.sqW = this.w / this.nOfSquares;
         this.sqH = this.h / this.nOfSquares;
@@ -83,15 +84,35 @@
           }
         }
 
+        for (let i = 0; i < this.nOfSquares; i++) {
+          for (let j = 0; j < this.nOfSquares; j++) {
+            let pawn = new Pawn(
+              i * (this.w / this.nOfSquares) + this.w / this.nOfSquares,
+              j * (this.h / this.nOfSquares) + this.h / this.nOfSquares,
+              this.sqW / 3,
+              "red"
+            );
+            this.pawns.push(pawn);
+          }
+        }
+
         this.draw = function () {
           for (let i = 0; i < this.squares.length; i++) {
             this.squares[i].draw();
+          }
+
+          for (let i = 0; i < this.squares.length; i++) {
+            this.pawns[i].draw();
           }
         };
 
         this.update = function () {
           for (let i = 0; i < this.squares.length; i++) {
             this.squares[i].draw();
+          }
+
+          for (let i = 0; i < this.squares.length; i++) {
+            this.pawns[i].draw();
           }
         };
       }
