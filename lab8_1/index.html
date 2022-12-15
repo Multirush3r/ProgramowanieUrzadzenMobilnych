@@ -86,7 +86,13 @@
               for (let k = 0; k < somsiedzi.length; k++) {
                 const { x, y } = somsiedzi[k];
 
-                gameBoard.pawns[x][y].drawn = false;
+                gameBoard.pawns[x][y] = new Pawn(
+                  gameBoard.pawns[x][y].x,
+                  gameBoard.pawns[x][y].y,
+                  gameBoard.pawns[x][y].radius,
+                  "",
+                  gameBoard.pawns[x][y].cord
+                );
               }
             }
           }
