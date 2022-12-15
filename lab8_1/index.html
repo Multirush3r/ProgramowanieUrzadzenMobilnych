@@ -13,6 +13,7 @@
       c.font = "30px Arial";
 
       let turn = 0;
+      let ruch = false;
 
       function isIntersect(point, circle) {
         return (
@@ -85,7 +86,7 @@
               for (let k = 0; k < somsiedzi.length; k++) {
                 const { x, y } = somsiedzi[k];
 
-                stones[x][y] = new Stone(stones[x][y].x, stones[x][y].y, 30);
+                gameBoard.pawns[x][y].drawn = false;
               }
             }
           }
@@ -117,6 +118,7 @@
                 pawn.drawn = true;
                 console.log(pawn);
               }
+              ruch = true;
             }
           });
         });
@@ -254,6 +256,10 @@
 
       function draw() {
         c.clearRect(0, 0, 800, 600);
+        if (ruch) {
+          zbij();
+          ruch = false;
+        }
         gameBoard.draw();
       }
 
