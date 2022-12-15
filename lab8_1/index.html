@@ -26,7 +26,7 @@
         var clr = gameBoard.pawns[x][y].colorID;
         var koordy = [];
 
-        const test = (x, y) => {
+        const check = (x, y) => {
           if (x < 0 || y < 0 || x >= 9 || y >= 9) {
             return;
           }
@@ -40,12 +40,12 @@
           }
 
           koordy.push({ x, y });
-          test(x + 1, y);
-          test(x - 1, y);
-          test(x, y + 1);
-          test(x, y - 1);
+          check(x + 1, y);
+          check(x - 1, y);
+          check(x, y + 1);
+          check(x, y - 1);
         };
-        test(x, y);
+        check(x, y);
         return koordy;
       }
 
