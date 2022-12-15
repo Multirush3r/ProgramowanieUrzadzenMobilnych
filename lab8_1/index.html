@@ -26,22 +26,26 @@
           x: e.clientX,
           y: e.clientY,
         };
-        gameBoard.pawns.forEach((pawn) => {
-          if (isIntersect(pos, pawn)) {
-            console.log("click on circle: " + pawn.x);
-            if (pawn.drawn) return;
-            if (turn == 0) {
-              pawn.color = "black";
-              pawn.dwc = true;
-              turn = 1;
-              pawn.drawn = true;
-            } else if (turn == 1) {
-              pawn.color = "white";
-              pawn.dwc = true;
-              turn = 0;
-              pawn.drawn = true;
+        gameBoard.pawns.forEach((row) => {
+          row.forEach((pawn) => {
+            if (isIntersect(pos, pawn)) {
+              console.log("click on circle: " + pawn.x);
+              if (pawn.drawn) return;
+              if (turn == 0) {
+                pawn.color = "black";
+                pawn.dwc = true;
+                turn = 1;
+                pawn.drawn = true;
+                console.log(pawn);
+              } else if (turn == 1) {
+                pawn.color = "white";
+                pawn.dwc = true;
+                turn = 0;
+                pawn.drawn = true;
+                console.log(pawn);
+              }
             }
-          }
+          });
         });
       });
 
@@ -138,17 +142,21 @@
           }
         }
 
+        this.pawns = makeTab2D(this.pawns);
+
         this.draw = function () {
           for (let i = 0; i < this.squares.length; i++) {
             this.squares[i].draw();
           }
 
-          for (let i = 0; i < this.pawns.length; i++) {
-            let pawn = this.pawns[i];
-            if (pawn.dwc) {
-              this.pawns[i].drawWithColor();
-            } else {
-              this.pawns[i].draw();
+          for (let i = 0; i < 9; i++) {
+            for (let j = 0; j < 9; j++) {
+              let pawn = this.pawns[i][j];
+              if (pawn.dwc) {
+                this.pawns[i][j].drawWithColor();
+              } else {
+                this.pawns[i][j].draw();
+              }
             }
           }
         };
@@ -158,8 +166,10 @@
             this.squares[i].draw();
           }
 
-          for (let i = 0; i < this.pawns.length; i++) {
-            this.pawns[i].draw();
+          for (let i = 0; i < 9; i++) {
+            for (let j = 0; j < 9; j++) {
+              this.pawns[i][j].draw();
+            }
           }
         };
       }
