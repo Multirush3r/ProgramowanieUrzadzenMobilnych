@@ -22,69 +22,69 @@
         );
       }
 
-      function znajdzSomsiada(x, y) {
-        var kolor = gameBoard.pawns[x][y].colorID;
-        var wspolrzedne = [];
+      function findNeighb(x, y) {
+        var clr = gameBoard.pawns[x][y].colorID;
+        var koordy = [];
 
         const test = (x, y) => {
           if (x < 0 || y < 0 || x >= 9 || y >= 9) {
             return;
           }
 
-          if (gameBoard.pawns[x][y].colorID != kolor) {
+          if (gameBoard.pawns[x][y].colorID != clr) {
             return;
           }
 
-          if (wspolrzedne.some((pionek) => pionek.x == x && pionek.y == y)) {
+          if (koordy.some((pionek) => pionek.x == x && pionek.y == y)) {
             return;
           }
 
-          wspolrzedne.push({ x, y });
+          koordy.push({ x, y });
           test(x + 1, y);
           test(x - 1, y);
           test(x, y + 1);
           test(x, y - 1);
         };
         test(x, y);
-        return wspolrzedne;
+        return koordy;
       }
 
-      function zbij() {
+      function destroy() {
         for (let i = 0; i < 9; i++) {
           for (let j = 0; j < 9; j++) {
             if (!gameBoard.pawns[i][j].colorID) continue;
 
-            var somsiedzi = znajdzSomsiada(i, j);
-            let uwieziony = true;
-            for (let k = 0; k < somsiedzi.length; k++) {
-              var { x, y } = somsiedzi[k];
+            var neighbourss = findNeighb(i, j);
+            let trapped = true;
+            for (let k = 0; k < neighbourss.length; k++) {
+              var { x, y } = neighbourss[k];
               if (
                 x + 1 < gameBoard.pawns.length &&
                 !gameBoard.pawns[x + 1][y].colorID
               ) {
-                uwieziony = false;
+                trapped = false;
               }
               if (x - 1 >= 0 && !gameBoard.pawns[x - 1][y].colorID) {
-                uwieziony = false;
+                trapped = false;
               }
               if (
                 y + 1 < gameBoard.pawns.length &&
                 !gameBoard.pawns[x][y + 1].colorID
               ) {
-                uwieziony = false;
+                trapped = false;
               }
               if (y - 1 >= 0 && !gameBoard.pawns[x][y - 1].colorID) {
-                uwieziony = false;
+                trapped = false;
               }
 
-              if (!uwieziony) {
+              if (!trapped) {
                 break;
               }
             }
 
-            if (uwieziony) {
-              for (let k = 0; k < somsiedzi.length; k++) {
-                const { x, y } = somsiedzi[k];
+            if (trapped) {
+              for (let k = 0; k < neighbourss.length; k++) {
+                const { x, y } = neighbourss[k];
 
                 gameBoard.pawns[x][y] = new Pawn(
                   gameBoard.pawns[x][y].x,
@@ -263,7 +263,7 @@
       function draw() {
         c.clearRect(0, 0, 800, 600);
         if (ruch) {
-          zbij();
+          destroy();
           ruch = false;
         }
         gameBoard.draw();
