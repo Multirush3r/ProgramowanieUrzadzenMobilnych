@@ -21,6 +21,77 @@
         );
       }
 
+      function znajdzSomsiada(x, y) {
+        var kolor = gameBoard.pawns[x][y].colorID;
+        var wspolrzedne = [];
+
+        const test = (x, y) => {
+          if (x < 0 || y < 0 || x >= 9 || y >= 9) {
+            return;
+          }
+
+          if (gameBoard.pawns[x][y].colorID != kolor) {
+            return;
+          }
+
+          if (wspolrzedne.some((pionek) => pionek.x == x && pionek.y == y)) {
+            return;
+          }
+
+          wspolrzedne.push({ x, y });
+          test(x + 1, y);
+          test(x - 1, y);
+          test(x, y + 1);
+          test(x, y - 1);
+        };
+        test(x, y);
+        return wspolrzedne;
+      }
+
+      function zbij() {
+        for (let i = 0; i < 9; i++) {
+          for (let j = 0; j < 9; j++) {
+            if (!gameBoard.pawns[i][j].colorID) continue;
+
+            var somsiedzi = znajdzSomsiada(i, j);
+            let uwieziony = true;
+            for (let k = 0; k < somsiedzi.length; k++) {
+              var { x, y } = somsiedzi[k];
+              if (
+                x + 1 < gameBoard.pawns.length &&
+                !gameBoard.pawns[x + 1][y].colorID
+              ) {
+                uwieziony = false;
+              }
+              if (x - 1 >= 0 && !gameBoard.pawns[x - 1][y].colorID) {
+                uwieziony = false;
+              }
+              if (
+                y + 1 < gameBoard.pawns.length &&
+                !gameBoard.pawns[x][y + 1].colorID
+              ) {
+                uwieziony = false;
+              }
+              if (y - 1 >= 0 && !gameBoard.pawns[x][y - 1].colorID) {
+                uwieziony = false;
+              }
+
+              if (!uwieziony) {
+                break;
+              }
+            }
+
+            if (uwieziony) {
+              for (let k = 0; k < somsiedzi.length; k++) {
+                const { x, y } = somsiedzi[k];
+
+                stones[x][y] = new Stone(stones[x][y].x, stones[x][y].y, 30);
+              }
+            }
+          }
+        }
+      }
+
       canvas.addEventListener("click", (e) => {
         const pos = {
           x: e.clientX,
@@ -33,12 +104,14 @@
               if (pawn.drawn) return;
               if (turn == 0) {
                 pawn.color = "black";
+                pawn.colorID = 1;
                 pawn.dwc = true;
                 turn = 1;
                 pawn.drawn = true;
                 console.log(pawn);
               } else if (turn == 1) {
                 pawn.color = "white";
+                pawn.colorID = 2;
                 pawn.dwc = true;
                 turn = 0;
                 pawn.drawn = true;
@@ -77,6 +150,7 @@
         this.radius = radius;
         this.color = color;
         this.cord = cord;
+        this.colorID = 0;
 
         this.neighbours = [];
 
