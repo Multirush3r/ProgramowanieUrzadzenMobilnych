@@ -163,53 +163,6 @@
           }
         };
 
-        this.checkForCapture = function (x, y) {
-          if (x < 0 || x >= this.width || y < 0 || y >= this.height) return;
-          var color = this.board[x][y];
-          if (color === 0) return;
-
-          this.getNeighboursWithSameColor(x, y);
-
-          var capture = true;
-          this.neighbours.every((stone) => {
-            if (this.checkIfEmpty(stone.x + 1, stone.y)) capture = false;
-            if (this.checkIfEmpty(stone.x - 1, stone.y)) capture = false;
-            if (this.checkIfEmpty(stone.x, stone.y + 1)) capture = false;
-            if (this.checkIfEmpty(stone.x, stone.y - 1)) capture = false;
-            return capture;
-          });
-
-          if (capture) {
-            this.neighbours.forEach(
-              (stone) => (this.board[stone.x][stone.y] = 0)
-            );
-          }
-        };
-
-        this.checkIfEmpty = function (x, y) {
-          if (x < 0 || x >= this.width || y < 0 || y >= this.height) return;
-          return this.board[x][y] === 0;
-        };
-
-        this.getNeighboursWithSameColor = function (x, y) {
-          var color = this.board[x][y];
-          this.neighbours = [];
-          this.addNeighbour(x, y, color);
-        };
-
-        this.addNeighbour = function (x, y, color) {
-          if (x < 0 || x >= this.width || y < 0 || y >= this.height) return;
-          if (this.board[x][y] !== color) return;
-          if (this.neighbours.some((stone) => stone.x === x && stone.y === y))
-            return;
-
-          this.neighbours.push({ x: x, y: y });
-          this.addNeighbour(x + 1, y, color);
-          this.addNeighbour(x - 1, y, color);
-          this.addNeighbour(x, y + 1, color);
-          this.addNeighbour(x, y - 1, color);
-        };
-
         this.update = function () {
           for (let i = 0; i < this.squares.length; i++) {
             this.squares[i].draw();
